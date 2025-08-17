@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CNN Image Predictor</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <h1>Upload an Image for Prediction</h1>
+    <input
+      type="file"
+      id="imageUpload"
+      accept="image/*"
+      capture="environment"
+    />
+    <button id="predictButton">Predict</button>
+    <hr />
+    <div id="imagePreview"></div>
+    <h2>Prediction Result:</h2>
+    <p id="resultText">...</p>
+    <script src="{{ url_for('static', filename='index.js') }}"></script>
+  </body>
+</html>
