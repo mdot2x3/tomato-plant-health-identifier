@@ -4,7 +4,31 @@ const imageUpload = document.getElementById("imageUpload");
 const predictButton = document.getElementById("predictButton");
 const resultText = document.getElementById("resultText");
 const imagePreview = document.getElementById("imagePreview");
+const sampleDropdown = document.getElementById("sampleDropdown");
 let uploadedFile = null;
+
+sampleDropdown.addEventListener("change", (event) => {
+  const selected = event.target.value;
+  if (selected) {
+    // show preview
+    imagePreview.innerHTML = "";
+    const img = document.createElement("img");
+    img.src = `/static/sample_images/${selected}`;
+    img.style.maxWidth = "300px";
+    imagePreview.appendChild(img);
+    resultText.innerText = "...";
+    // fetch the image as a blob and set as uploadedFile
+    fetch(img.src)
+      .then((res) => res.blob())
+      .then((blob) => {
+        uploadedFile = new File([blob], selected, { type: blob.type });
+      });
+  } else {
+    uploadedFile = null;
+    imagePreview.innerHTML = "";
+    resultText.innerText = "...";
+  }
+});
 
 imageUpload.addEventListener("change", (event) => {
   // get the selected file
@@ -22,6 +46,8 @@ imageUpload.addEventListener("change", (event) => {
     };
     reader.readAsDataURL(uploadedFile);
     resultText.innerText = "...";
+    // reset dropdown selection
+    sampleDropdown.value = "";
   }
 });
 

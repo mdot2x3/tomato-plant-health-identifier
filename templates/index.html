@@ -11,13 +11,42 @@
   </head>
   <body>
     <h1>Upload an Image for Prediction</h1>
-    <input
-      type="file"
-      id="imageUpload"
-      accept="image/*"
-      capture="environment"
-    />
-    <button id="predictButton">Predict</button>
+    <div class="flex-container">
+      <div class="left-column">
+        <input
+          type="file"
+          id="imageUpload"
+          accept="image/*"
+          capture="environment"
+        />
+        <label for="sampleDropdown"
+          ><em>or select from uploaded images below</em></label
+        >
+        <select id="sampleDropdown">
+          <option value="">-- Select a sample image --</option>
+          <option value="Bacterial_spot.JPG">Bacterial_spot.JPG</option>
+          <option value="Early_blight.JPG">Early_blight.JPG</option>
+          <option value="healthy.JPG">healthy.JPG</option>
+          <option value="Late_blight.JPG">Late_blight.JPG</option>
+          <option value="Leaf_Mold.JPG">Leaf_Mold.JPG</option>
+          <option value="powdery_mildew.jpg">powdery_mildew.jpg</option>
+          <option value="Septoria_leaf_spot.JPG">Septoria_leaf_spot.JPG</option>
+          <option value="Spider_mites Two-spotted_spider_mite.JPG">
+            Spider_mites Two-spotted_spider_mite.JPG
+          </option>
+          <option value="Target_Spot.JPG">Target_Spot.JPG</option>
+          <option value="Tomato_mosaic_virus.JPG">
+            Tomato_mosaic_virus.JPG
+          </option>
+          <option value="Tomato_Yellow_Leaf_Curl_Virus.JPG">
+            Tomato_Yellow_Leaf_Curl_Virus.JPG
+          </option>
+        </select>
+      </div>
+      <div class="right-column">
+        <button id="predictButton">Predict</button>
+      </div>
+    </div>
     <hr />
     <div id="imagePreview"></div>
     <h2>Prediction Result:</h2>
