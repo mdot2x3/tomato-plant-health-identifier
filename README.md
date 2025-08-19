@@ -4,7 +4,9 @@ A web application that uses a Convolutional Neural Network (CNN) to identify the
 
 ## Features
 
-- Upload or capture an image for prediction (mobile-friendly: supports camera capture)
+The machine learning model is capable of identifying a healthy tomato leaf and tomato leaf diseases in the following 10 categories (bacterial spot, early blight, late blight, leaf mold, powdery mildew, septoria leaf spot, spider mites(two-spotted spider mite), target spot, tomato mosaic virus, tomato yellow leaf curl virus).
+
+- Upload or capture an image of a (single preferably) tomato plant leaf for prediction (mobile-friendly: supports camera capture)
 - Select from sample images using a dropdown for quick testing
 - Predicts various tomato plant diseases and healthy status
 - Built with Flask and TensorFlow Lite (TFLite)
@@ -65,6 +67,17 @@ Visit [http://127.0.0.1:5000/](http://127.0.0.1:5000/) in your browser.
 - `Procfile` - Heroku process file
 - `transfer_learning_model.tflite` - Trained TFLite model file
 
+## Contributing
+
+1. Fork the repository
+2. Create a new branch (`git checkout -b feature-branch`)
+3. Commit your changes
+4. Push to your fork and open a pull request
+
 ## License
 
 MIT License
+
+## Acknowledgements
+
+https://www.kaggle.com/datasets/ashishmotwani/tomato?select=train
