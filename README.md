@@ -7,7 +7,7 @@ A web application that uses a Convolutional Neural Network (CNN) to identify the
 - Upload or capture an image for prediction (mobile-friendly: supports camera capture)
 - Select from sample images using a dropdown for quick testing
 - Predicts various tomato plant diseases and healthy status
-- Built with Flask and TensorFlow/Keras
+- Built with Flask and TensorFlow Lite (TFLite)
 
 ## Setup (Local)
 
@@ -33,7 +33,8 @@ A web application that uses a Convolutional Neural Network (CNN) to identify the
 
 4. **Add your trained model:**
 
-   - Place your `.h5` model file in the project root. This project uses the included ResNet50 transfer learning model `transfer_learning_model_saved.h5`.
+   - Place your `.tflite` model file in the project root. This project uses the included ResNet50 transfer learning model `transfer_learning_model.tflite`.
+   - If you need to convert a Keras `.h5` model to TFLite, use the provided `convert_to_tflite.py` script.
 
 5. **Add sample images (optional but recommended):**
    - Place images you want available in the dropdown inside the `static/sample_images/` directory.
@@ -57,11 +58,12 @@ Visit [http://127.0.0.1:5000/](http://127.0.0.1:5000/) in your browser.
 ## Project Structure
 
 - `app.py` - Main Flask application
+- `convert_to_tflite.py` - Script to convert Keras `.h5` models to TFLite
 - `templates/` - HTML templates
 - `static/` - Static files (CSS, JS, sample images)
 - `requirements.txt` - Python dependencies
 - `Procfile` - Heroku process file
-- `transfer_learning_model_saved.h5` - Trained model file
+- `transfer_learning_model.tflite` - Trained TFLite model file
 
 ## License
 

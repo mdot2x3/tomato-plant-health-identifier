@@ -1,2 +1,4 @@
 .venv/
 alldata_notebook_resnet50.ipynb
+convert_to_tflite.py
+transfer_learning_model_saved.h5

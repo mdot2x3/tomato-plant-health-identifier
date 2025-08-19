@@ -1,29 +1,39 @@
 from flask import Flask, request, jsonify, render_template
-from tensorflow.keras.models import load_model
-from tensorflow.keras.applications.resnet50 import preprocess_input
 from PIL import Image
 import numpy as np
 import io
-import tensorflow as tf
+from tflite_runtime.interpreter import Interpreter
 
 app = Flask(__name__)
 
-# load the trained model
-model = load_model('transfer_learning_model_saved.h5')
+# load TFLite model and allocate tensors
+TFLITE_MODEL_PATH = 'transfer_learning_model.tflite'
+interpreter = Interpreter(model_path=TFLITE_MODEL_PATH)
+interpreter.allocate_tensors()
+input_details = interpreter.get_input_details()
+output_details = interpreter.get_output_details()
 
-# pre-processing function (same as in notebook)
+def preprocess_input(x):
+    # minimal ResNet50 preprocessing: subtract mean RGB as in original ResNet50
+    x = x.astype(np.float32)
+    mean = np.array([103.939, 116.779, 123.68], dtype=np.float32)
+    x[..., 0] -= mean[0]
+    x[..., 1] -= mean[1]
+    x[..., 2] -= mean[2]
+    return x
+
 def prepare_image(image, target_size):
     if image.mode != "RGB":
         image = image.convert("RGB")
     image = image.resize(target_size)
     image_array = np.asarray(image)
     image_array = np.expand_dims(image_array, axis=0)
-    image_array = preprocess_input(image_array)  # use ResNet50 preprocessing
+    image_array = preprocess_input(image_array)
+    image_array = image_array.astype(np.float32)
     return image_array
 
 @app.route('/')
 def index():
-    # serve the main HTML page
     return render_template('index.html')
 
 CLASS_LABELS = ['Bacterial_spot', 'Early_blight', 'healthy', 'Late_blight', 'Leaf_Mold', 'powdery_mildew', 'Septoria_leaf_spot',
@@ -39,16 +49,16 @@ def predict():
     try:
         image_bytes = file.read()
         image = Image.open(io.BytesIO(image_bytes))
+        processed_image = prepare_image(image, target_size=(224, 224))
 
-        # pre-process the image
-        processed_image = prepare_image(image, target_size=(224, 224)) # use model's input size
+        # set input tensor
+        interpreter.set_tensor(input_details[0]['index'], processed_image)
+        interpreter.invoke()
+        prediction = interpreter.get_tensor(output_details[0]['index'])[0]
 
-        # make a prediction
-        prediction = model.predict(processed_image)
-        pred_prob = tf.nn.softmax(prediction[0]).numpy()  # apply softmax
-        
-        # format the response
-        # depends heavily on the model's output
+        # apply softmax manually (since tflite-runtime does not have tf.nn.softmax)
+        exp_preds = np.exp(prediction - np.max(prediction))
+        pred_prob = exp_preds / exp_preds.sum()
         predicted_class = int(np.argmax(pred_prob))
         confidence = float(np.max(pred_prob))
         label = CLASS_LABELS[predicted_class] if predicted_class < len(CLASS_LABELS) else f"Class {predicted_class}"
