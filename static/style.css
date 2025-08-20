@@ -130,6 +130,18 @@ h2 {
   min-height: 2rem;
 }
 
+footer {
+  text-align: center;
+  padding: 1rem 0;
+  background: #f1f8e9;
+  border-top: 2px solid #a5d6a7;
+}
+
+#footer-bottom {
+  font-size: 0.9rem;
+  color: #2e4637;
+}
+
 @media (max-width: 600px) {
   .flex-container {
     flex-direction: column;

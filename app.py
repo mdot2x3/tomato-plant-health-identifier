@@ -73,4 +73,5 @@ def predict():
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
+    # set host post for Heroku, and set debug to False to enable production mode
     app.run(host="0.0.0.0", port=port, debug=False)

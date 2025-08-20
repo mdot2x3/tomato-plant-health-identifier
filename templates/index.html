@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ML Tomato Leaf Image Predictor</title>
+    <title>Tomato Plant Health Identifier</title>
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='style.css') }}"
@@ -52,5 +52,22 @@
     <h2>Prediction Result:</h2>
     <p id="resultText">...</p>
     <script src="{{ url_for('static', filename='index.js') }}"></script>
+    <footer>
+      <p>
+        View
+        <a
+          href="https://github.com/mdot2x3/tomato-plant-health-identifier/blob/main/README.md"
+          >README</a
+        >
+        for app instructions
+      </p>
+      <p>&copy; 2025 Tomato Plant Health Identifier</p>
+      <p id="footer-bottom">
+        See other projects by
+        <a href="https://github.com/mdot2x3/tomato-plant-health-identifier"
+          >mdot2x3</a
+        >
+      </p>
+    </footer>
   </body>
 </html>
